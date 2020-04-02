@@ -25,8 +25,10 @@ class DB
     
     protected function readConf($name)
     {
+        echo "\n\n".__METHOD__."\n\n";
         if (!empty($this->conf)) {
-            $config = include $name;
+            echo "\n\n".$this->conf."\n\n";
+            $config = file_get_contents($this->conf);
             return $config[$name];
         }
         return FALSE;
@@ -42,12 +44,21 @@ class DB
         $conf  = $this->readConf($this->getDb());
         try{
             $dsn = 'mysql:host='.$conf['host'].';dbname='.$conf['db'];
-            return new PDO($dsn, $user, $pass);
+            echo "USER - ".$conf['user']."\n\n";
+           // return new PDO($dsn, $conf['user'], $conf['pass']);
         } catch (Exception $e) {
             echo $e->getMessage()."\n\n";
         }
     }
     
+    public function getTable()
+    {
+        if (preg_match_all('~([A-Z][^A-Z]*)~', get_class(), $matches)) {
+            
+        }
+        return false;
+    }
+ 
     public function  getDb()
     {
         return 'user_tasks';

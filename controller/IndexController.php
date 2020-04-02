@@ -7,10 +7,8 @@ class IndexController
 {
     public function actionIndex()
     {
-        echo "\n\n".__METHOD__."\n\n";
         $db = new DB();
-        $db->connect();
-        
+        $db->connect();    
     }
 }
 
