@@ -7,6 +7,7 @@ class DB
 {
     protected  $conf;
     protected  $conf_name;
+    protected  $pdo;
 
     public function __construct($conf = 'config/config.php') 
     {
@@ -20,9 +21,7 @@ class DB
     
     protected function readConf($name)
     {
-        echo "\n\n".__METHOD__."\n\n";
         if (!empty($this->conf)) {
-            echo "\n\n".$this->conf."\n\n";
             $config = include_once $this->conf;
             if (isset($config[$name])) {
                 return $config[$name];
@@ -41,8 +40,8 @@ class DB
         $conf  = $this->readConf($this->getDb());
         try{
             $dsn = 'mysql:host='.$conf['host'].';dbname='.$conf['db'];
-            echo "USER - ".$conf['user']."\n\n";
-           // return new PDO($dsn, $conf['user'], $conf['pass']);
+            $this->pdo = new PDO($dsn, $conf['user'], $conf['pass']); 
+            return $this->pdo;
         } catch (Exception $e) {
             echo $e->getMessage()."\n\n";
         }
@@ -50,8 +49,16 @@ class DB
     
     public function getTable()
     {
-        if (preg_match_all('~([A-Z][^A-Z]*)~', get_class(), $matches)) {
-            
+        if (preg_match_all('~(?<match>[A-Z][^A-Z]*)~',get_class($this), $matches)) {
+            $table = '';
+            $size = count($matches['match']);
+            for ($i = 0; $i < $size; $i++) {
+                $table.= lcfirst($matches['match'][$i]);
+                if ($i != $size -1) {
+                    $table.= '_';
+                }
+            }
+            return $table;
         }
         return false;
     }
