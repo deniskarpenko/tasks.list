@@ -15,12 +15,7 @@ class DB
     
     public function setConfFile($conf)
     {
-        if (file_exists($conf)) {
-            $this->conf = $conf;
-            return TRUE;
-        }
-        echo "Не найден файл по такому адресу\n\n";
-        return FALSE;
+        $this->conf = $conf;
     }
     
     protected function readConf($name)
@@ -28,8 +23,10 @@ class DB
         echo "\n\n".__METHOD__."\n\n";
         if (!empty($this->conf)) {
             echo "\n\n".$this->conf."\n\n";
-            $config = file_get_contents($this->conf);
-            return $config[$name];
+            $config = include_once $this->conf;
+            if (isset($config[$name])) {
+                return $config[$name];
+            }
         }
         return FALSE;
     }
