@@ -2,6 +2,7 @@
 namespace controller;
 
 use model\User;
+use view\View;
 
 class IndexController
 {
@@ -9,7 +10,10 @@ class IndexController
     {
         $db = new User();
         $db->connect(); 
-        echo "\n\n".print_r($db->findUserAndTasks())."\n\n";
+        $user_and_tasks = $db->findUserAndTasks();
+        $view = new View();
+        
+        //  echo "\n\n".print_r($db->findUserAndTasks())."\n\n";
     }
 }
 

@@ -1,9 +1,9 @@
 <?php
 namespace view;
 
-class IndexView extends View
+class IndexView implements ViewInterface
 {
-    public function viewTasksTable()
+    public function render()
     {
         
     }
