@@ -1,5 +1,5 @@
 <?php
-namespace view\interface;
+namespace view;
 
 interface ViewInterface
 {

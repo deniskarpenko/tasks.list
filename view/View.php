@@ -3,8 +3,8 @@ namespace view;
 
 class View
 {
-    public function render(\ViewInterface $view) 
+    public static function render(ViewInterface $view) 
     {
-        
+        $view->render();
     }
 }
